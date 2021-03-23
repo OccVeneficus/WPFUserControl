@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30717.126
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MainView", "MainView\MainView.csproj", "{77F7C9C4-39C0-417E-810B-EEC1527CA17C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MainVM", "MainVM\MainVM.csproj", "{3F4EE36D-7D4B-41AB-A2E2-560C6584D479}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MainModel", "MainModel\MainModel.csproj", "{20C46F19-7F5C-4647-B5F7-3E99DC42D55A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{77F7C9C4-39C0-417E-810B-EEC1527CA17C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77F7C9C4-39C0-417E-810B-EEC1527CA17C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77F7C9C4-39C0-417E-810B-EEC1527CA17C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77F7C9C4-39C0-417E-810B-EEC1527CA17C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F4EE36D-7D4B-41AB-A2E2-560C6584D479}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F4EE36D-7D4B-41AB-A2E2-560C6584D479}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F4EE36D-7D4B-41AB-A2E2-560C6584D479}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F4EE36D-7D4B-41AB-A2E2-560C6584D479}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20C46F19-7F5C-4647-B5F7-3E99DC42D55A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20C46F19-7F5C-4647-B5F7-3E99DC42D55A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20C46F19-7F5C-4647-B5F7-3E99DC42D55A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20C46F19-7F5C-4647-B5F7-3E99DC42D55A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D88E4470-C114-4FCB-B487-34FFFBD1E514}
+	EndGlobalSection
+EndGlobal
