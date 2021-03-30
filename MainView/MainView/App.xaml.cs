@@ -18,7 +18,7 @@ namespace MainView
             base.OnStartup(e);
 
             var mainWindow = new MainWindow();
-            var mainVM = new MainVM.MainVM();
+            var mainVM = new MainVM.MainVM(new FileWindowService());
             mainWindow.DataContext = mainVM;
             mainWindow.Show();
         }

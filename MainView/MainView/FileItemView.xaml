@@ -1,5 +1,6 @@
 ﻿<UserControl
     x:Class="MainView.FileItemView"
+    x:Name="FileItemControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -9,24 +10,36 @@
     d:DesignHeight="20"
     d:DesignWidth="380"
     mc:Ignorable="d">
-    <Grid>
+    <UserControl.Resources>
+        <Style x:Key="ButtonVisisability" TargetType="{x:Type Button}">
+            <Setter Property="Visibility" Value="Hidden"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Grid,AncestorLevel=1}, Path=IsMouseOver}" Value="True">
+                    <Setter Property="Visibility" Value="Visible"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="True">
+                    <Setter Property="Visibility" Value="Visible"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    <Grid x:Name="ControlGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto"  />
         </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
         <TextBlock
             x:Name="FileNameTextBlock"
-            Grid.Row="0"
             Grid.Column="0"
-            Background="White"
-            Text="{Binding Name}" />
+            Background="Transparent"
+            HorizontalAlignment="Stretch"
+            Text="{Binding Text, ElementName=FileItemControl}">
+        </TextBlock>
         <Button
             x:Name="DeleteButton"
-            Grid.Row="0"
             Grid.Column="1"
+            Width="18"
+            Style="{StaticResource ButtonVisisability}"
             Command="{Binding ElementName=Window,
             Path=DataContext.DeleteCommand}"
             CommandParameter="{Binding Text, ElementName=FileNameTextBlock}"
