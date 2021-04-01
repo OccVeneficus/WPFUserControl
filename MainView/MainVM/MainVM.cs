@@ -12,12 +12,24 @@ using MainVM.Annotations;
 
 namespace MainVM
 {
+    /// <summary>
+    /// View Model для главного окна
+    /// </summary>
     public class MainVM : INotifyPropertyChanged, INotifyDataErrorInfo
     {
         private ObservableCollection<FileItem> _fileItems = new ObservableCollection<FileItem>();
 
-        private IFileWindowService _fileWindowService;
+        private readonly IFileWindowService _fileWindowService;
 
+        private FileItem _currentFileItem;
+
+        private RelayCommand<string> _deleteCommand;
+
+        private RelayCommand _addCommand;
+
+        /// <summary>
+        /// Коллекция добавленных файлов
+        /// </summary>
         public ObservableCollection<FileItem> FileList
         {
             get => _fileItems;
@@ -28,8 +40,9 @@ namespace MainVM
             }
         }
 
-        private FileItem _currentFileItem;
-
+        /// <summary>
+        /// Текущий выбранный файл
+        /// </summary>
         public FileItem CurrentFileItem
         {
             get => _currentFileItem;
@@ -40,13 +53,16 @@ namespace MainVM
             }
         }
 
-        public MainVM(IFileWindowService fileWindowService)
-        {
-            _fileWindowService = fileWindowService;
-        }
+        /// <summary>
+        /// Ищет ошибку для последнего добавленного файла
+        /// </summary>
+        public bool HasErrors => _errorsByPropertyName.Any(x=>x.Key ==
+            nameof(FileItem) && x.Value.Contains(_fileItems[_fileItems.Count-1].Name));
 
-        private RelayCommand<string> _deleteCommand;
 
+        /// <summary>
+        /// Команда для удаления файла из списка
+        /// </summary>
         public RelayCommand<string> DeleteCommand
         {
             get
@@ -60,8 +76,10 @@ namespace MainVM
             }
         }
 
-        private RelayCommand _addCommand;
 
+        /// <summary>
+        /// Команда для добавления файла в список
+        /// </summary>
         public RelayCommand AddCommand
         {
             get
@@ -77,14 +95,23 @@ namespace MainVM
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        /// <summary>
+        /// Конструктор с сервисами 
+        /// </summary>
+        /// <param name="fileWindowService">Сервис окна выбора файла</param>
+        public MainVM(IFileWindowService fileWindowService)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            _fileWindowService = fileWindowService;
         }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+
+        /// <summary>
+        /// Проверка расширения файла
+        /// </summary>
+        /// <param name="file">Файл для проверки</param>
         private void ValidateFileName(FileItem file)
         {
             var extension = Path.GetExtension(file.Name);
@@ -141,9 +168,10 @@ namespace MainVM
             ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
         }
 
-        public bool HasErrors => _errorsByPropertyName.Any(x=>x.Key == nameof(FileItem) && x.Value.Contains(_fileItems[_fileItems.Count-1].Name));
-
-
-        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

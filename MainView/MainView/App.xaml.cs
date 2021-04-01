@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 using System.Windows;
+using MainVM;
 
 namespace MainView
 {
@@ -13,14 +10,31 @@ namespace MainView
     /// </summary>
     public partial class App : Application
     {
+        public App()
+        {
+            InitializeComponent();
+            Container = ConfigureDependencyInjection();
+        }
+
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
 
             var mainWindow = new MainWindow();
-            var mainVM = new MainVM.MainVM(new FileWindowService());
-            mainWindow.DataContext = mainVM;
+            var container = Container;
+            mainWindow.DataContext = (MainVM.MainVM) ActivatorUtilities.GetServiceOrCreateInstance(container, typeof(MainVM.MainVM));
             mainWindow.Show();
+        }
+
+        public IServiceProvider Container { get; }
+
+        IServiceProvider ConfigureDependencyInjection()
+        {
+            var serviceCollection = new ServiceCollection();
+
+            serviceCollection.AddTransient<IFileWindowService, FileWindowService>();
+
+            return serviceCollection.BuildServiceProvider();
         }
     }
 }

@@ -4,10 +4,16 @@ using MainModel.Annotations;
 
 namespace MainModel
 {
+    /// <summary>
+    /// Класс, представляющий файл
+    /// </summary>
     public class FileItem : INotifyPropertyChanged
     {
         private string _name;
 
+        /// <summary>
+        /// Имя файла
+        /// </summary>
         public string Name
         {
             get => _name;
