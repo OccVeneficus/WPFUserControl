@@ -12,13 +12,16 @@
     mc:Ignorable="d">
     <UserControl.Resources>
         <Style x:Key="ButtonVisisability" TargetType="{x:Type Button}">
-            <Setter Property="Visibility" Value="Hidden" />
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="BorderBrush" Value="Transparent" />
-            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Opacity" Value="0"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Cursor" Value="Hand"/>
             <Style.Triggers>
                 <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Grid, AncestorLevel=1}, Path=IsMouseOver}" Value="True">
-                    <Setter Property="Visibility" Value="Visible" />
+                    <Setter Property="Opacity" Value="1"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Grid, AncestorLevel=1}, Path=IsMouseOver}" Value="False">
+                    <Setter Property="Opacity" Value="0"/>
                 </DataTrigger>
             </Style.Triggers>
         </Style>
@@ -26,26 +29,26 @@
             x:Key="Delete"
             Width="18"
             Height="18"
-            Source="/Resources/clear.png" />
+            Source="/Resources/clear.png"/>
     </UserControl.Resources>
     <Grid x:Name="ControlGrid">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
         <TextBlock
             x:Name="FileNameTextBlock"
             Grid.Column="0"
             HorizontalAlignment="Stretch"
             Background="Transparent"
-            Text="{Binding Name}" />
+            Text="{Binding Name}"/>
         <Button
             x:Name="DeleteButton"
             Grid.Column="1"
             HorizontalAlignment="Right"
             Command="{Binding ElementName=Window, Path=DataContext.DeleteCommand}"
-            CommandParameter="{Binding Text, ElementName=FileNameTextBlock}"
+            CommandParameter="{Binding}"
             Content="{StaticResource Delete}"
-            Style="{StaticResource ButtonVisisability}" />
+            Style="{StaticResource ButtonVisisability}"/>
     </Grid>
 </UserControl>

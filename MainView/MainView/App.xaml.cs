@@ -32,7 +32,7 @@ namespace MainView
         {
             var serviceCollection = new ServiceCollection();
 
-            serviceCollection.AddTransient<IFileWindowService, FileWindowService>();
+            serviceCollection.AddTransient<IOpenFileDialogService, OpenFileDialogService>();
 
             return serviceCollection.BuildServiceProvider();
         }

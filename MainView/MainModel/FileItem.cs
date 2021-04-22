@@ -1,13 +1,17 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using MainModel.Annotations;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.IO;
+using System.Linq;
+using GalaSoft.MvvmLight;
 
 namespace MainModel
 {
     /// <summary>
     /// Класс, представляющий файл
     /// </summary>
-    public class FileItem : INotifyPropertyChanged
+    public class FileItem : ViewModelBase, INotifyDataErrorInfo
     {
         private string _name;
 
@@ -19,8 +23,12 @@ namespace MainModel
             get => _name;
             set
             {
-                _name = value;
-                OnPropertyChanged(nameof(Name));
+                Set(ref _name, value);
+                var extension = Path.GetExtension(_name);
+                if (extension != ".dll" && extension != ".exe")
+                {
+                    AddError(_name);
+                }
             }
         }
 
@@ -34,12 +42,54 @@ namespace MainModel
             Name = name;
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        /// <summary>
+        /// Список для хранения ошибок 
+        /// </summary>
+        private readonly List<string> _errors =
+            new List<string>();
 
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        /// <summary>
+        /// Добавить ошибку в список
+        /// </summary>
+        /// <param name="fileName">Описание ошибки</param>
+        private void AddError(string fileName)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            if (!_errors.Contains(fileName))
+            {
+                _errors.Add(fileName);
+                OnErrorsChanged(nameof(FileItem));
+            }
         }
+
+        /// <summary>
+        /// Очистить список ошибок
+        /// </summary>
+        /// <param name="propertyName"></param>
+        private void ClearErrors(string propertyName)
+        {
+            if (_errors.Contains(propertyName))
+            {
+                _errors.Remove(propertyName);
+                OnErrorsChanged(propertyName);
+            }
+        }
+
+        private void OnErrorsChanged(string propertyName)
+        {
+            ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
+        }
+
+        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+
+        public IEnumerable GetErrors(string propertyName)
+        {
+            return _errors.Contains(propertyName) ?
+                _errors : null;
+        }
+
+        /// <summary>
+        /// Ищет ошибку для последнего добавленного файла
+        /// </summary>
+        public bool HasErrors => _errors.Any();
     }
 }

@@ -12,20 +12,23 @@
     mc:Ignorable="d">
     <Window.Resources>
         <ControlTemplate x:Key="ValidationTemplate">
-            <Canvas Background="#FEE" />
+            <Canvas Background="#FEE"/>
         </ControlTemplate>
         <Image
             x:Key="Add"
             Width="18"
             Height="18"
-            Source="/Resources/plus.png" />
+            Source="/Resources/plus.png"/>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <ScrollViewer Grid.Row="0" Margin="10,10,10,10">
+        <ScrollViewer
+            Grid.Row="0"
+            Margin="10 10 10 10"
+            VerticalScrollBarVisibility="Auto">
             <ListView
                 x:Name="FileList"
                 HorizontalContentAlignment="Stretch"
@@ -34,17 +37,17 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ContentControl>
-                            <local:FileItemView />
+                            <local:FileItemView/>
                         </ContentControl>
                     </DataTemplate>
                 </ListView.ItemTemplate>
                 <ListView.ItemContainerStyle>
                     <Style TargetType="{x:Type ListViewItem}">
-                        <Setter Property="Background" Value="Transparent" />
+                        <Setter Property="Background" Value="Transparent"/>
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding ElementName=FileList, Path=DataContext.HasErrors}" Value="True">
-                                <Setter Property="Background" Value="#FEE" />
-                                <Setter Property="BorderBrush" Value="#FEE" />
+                                <Setter Property="Background" Value="#FEE"/>
+                                <Setter Property="BorderBrush" Value="#FEE"/>
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
@@ -58,6 +61,7 @@
             Command="{Binding AddCommand}"
             Content="{StaticResource Add}"
             Cursor="Hand"
-            Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" />
+            SnapsToDevicePixels="True"
+            Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"/>
     </Grid>
 </Window>

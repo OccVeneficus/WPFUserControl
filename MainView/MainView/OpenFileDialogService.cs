@@ -3,7 +3,7 @@ using Microsoft.Win32;
 
 namespace MainView
 {
-    public class FileWindowService : IFileWindowService
+    public class OpenFileDialogService : IOpenFileDialogService
     {
         public string FileName { get; set; }
         public bool? ShowDialog(string title)
